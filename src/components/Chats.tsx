@@ -1,12 +1,10 @@
-import Head from "next/head";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
-import Chats from "../components/Chats";
-import SideBar from "../components/SideBar";
 
 let socket = io("http://localhost:3001");
 
-export default function Home() {
+
+export default function Chats() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
 
@@ -21,13 +19,23 @@ const sendMessage = () => {
   setInput("");
 }
   return (
-    <div>
-      <Head>
-        <title>Support Chat</title>
-      </Head>
-      <h1>Suppport Chat</h1>
-      <Chats/>
-      <SideBar/>
-    </div>
+    <>
+       <input
+        placeholder="message"
+        onChange={(e) => setInput(e.target.value)}
+        value={input}
+      />
+      <button onClick={sendMessage}>send</button>
+      <div id="messages">
+        {messages.map((msg, idx) => (
+          <div key={idx}className="message">{msg}</div>
+        ))}
+      </div>
+    </>
   );
 }
+
+
+
+
+  
